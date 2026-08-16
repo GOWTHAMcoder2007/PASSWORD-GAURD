@@ -1,0 +1,436 @@
+/* =========================================================
+   Password Strength Checker — Dark Cybersecurity Theme
+   ========================================================= */
+
+:root {
+  --bg-0: #0a0e14;
+  --bg-1: #0f1620;
+  --bg-2: #141d2b;
+  --bg-card: #111926;
+  --border: #223047;
+  --border-light: #2c3d5a;
+
+  --text-primary: #e6edf5;
+  --text-secondary: #8a9bb5;
+  --text-muted: #5c6d87;
+
+  --accent: #00e5a0;
+  --accent-dim: #00b380;
+  --accent-glow: rgba(0, 229, 160, 0.35);
+
+  --cyan: #3fd3ff;
+
+  --danger: #ff4d5e;
+  --warning: #ff9f43;
+  --caution: #ffd23f;
+  --good: #6bd968;
+  --great: #00e5a0;
+
+  --radius: 14px;
+  --radius-sm: 8px;
+
+  --font-main: "Segoe UI", "Consolas", "Roboto", Arial, sans-serif;
+  --font-mono: "Consolas", "SFMono-Regular", Menlo, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background: radial-gradient(circle at 20% -10%, #10233a 0%, var(--bg-0) 55%) fixed;
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  line-height: 1.5;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(0, 229, 160, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 160, 0.04) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  padding: 28px 20px 10px;
+  text-align: center;
+}
+
+.header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.logo-icon {
+  filter: drop-shadow(0 0 8px var(--accent-glow));
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.tagline {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-top: 6px;
+}
+
+/* ---------- Layout ---------- */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px 20px 60px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Cards ---------- */
+.card {
+  background: linear-gradient(180deg, var(--bg-card), var(--bg-1));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  animation: fadeInUp 0.5s ease both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-title {
+  margin: 0 0 16px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  border-left: 3px solid var(--accent);
+  padding-left: 10px;
+}
+
+.sub-title {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin: 18px 0 10px;
+}
+
+/* ---------- Privacy notice ---------- */
+.privacy-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-light);
+  background: linear-gradient(90deg, rgba(0, 229, 160, 0.08), transparent);
+}
+
+.privacy-icon {
+  font-size: 1.2rem;
+}
+
+.privacy-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* ---------- Inputs ---------- */
+.field-label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.password-input,
+.generated-output {
+  flex: 1;
+  background: var(--bg-2);
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  min-width: 0;
+}
+
+.password-input:focus,
+.generated-output:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.icon-btn {
+  flex-shrink: 0;
+  background: var(--bg-2);
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+  width: 44px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 1.05rem;
+  transition: background 0.2s, border-color 0.2s, transform 0.1s;
+}
+
+.icon-btn:hover {
+  background: var(--bg-card);
+  border-color: var(--accent);
+}
+
+.icon-btn:active {
+  transform: scale(0.94);
+}
+
+/* ---------- Meter ---------- */
+.meter-section {
+  margin-top: 20px;
+}
+
+.meter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.strength-label {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.score-text {
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.meter-track {
+  width: 100%;
+  height: 12px;
+  background: var(--bg-2);
+  border: 1px solid var(--border-light);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.meter-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: var(--danger);
+  transition: width 0.35s ease, background-color 0.35s ease;
+  box-shadow: 0 0 12px currentColor;
+}
+
+/* ---------- Checklist ---------- */
+.checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 14px;
+}
+
+@media (max-width: 480px) {
+  .checklist {
+    grid-template-columns: 1fr;
+  }
+}
+
+.checklist li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.87rem;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.checklist li.passed {
+  color: var(--text-primary);
+}
+
+.check-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  background: var(--bg-2);
+  color: var(--danger);
+  border: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+
+.checklist li.passed .check-icon {
+  color: var(--bg-0);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ---------- Suggestions ---------- */
+.suggestions {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.suggestions li {
+  margin-bottom: 6px;
+}
+
+/* ---------- Generator ---------- */
+.range-input {
+  width: 100%;
+  accent-color: var(--accent);
+  margin: 6px 0 16px;
+}
+
+.gen-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.checkbox-label input {
+  accent-color: var(--accent);
+  width: 16px;
+  height: 16px;
+}
+
+.primary-btn {
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--cyan));
+  color: #04140f;
+  border: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 13px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.2s;
+  box-shadow: 0 6px 18px var(--accent-glow);
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px var(--accent-glow);
+}
+
+.primary-btn:active {
+  transform: translateY(0);
+}
+
+.secondary-btn {
+  width: 100%;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px dashed var(--border-light);
+  font-size: 0.85rem;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  margin-top: 12px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.secondary-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.generated-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.copy-status {
+  min-height: 18px;
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin: 6px 2px 0;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  padding: 20px;
+}
+
+/* ---------- Strength color states (applied via JS) ---------- */
+.strength-very-weak { color: var(--danger); }
+.strength-weak { color: var(--warning); }
+.strength-medium { color: var(--caution); }
+.strength-strong { color: var(--good); }
+.strength-very-strong { color: var(--great); }
